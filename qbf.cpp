@@ -158,7 +158,7 @@ void QBF :: print_shortest_path()
         }
         else
         {
-            std::cout << "\tcost: " << _distances[*it];
+            std::cout << "\tdistance: " << _distances[*it] << " m";
         }
     }
 
