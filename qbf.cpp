@@ -21,7 +21,8 @@ QBF :: QBF(const std::string& file_name_) : _computed(false)
             continue;
         }
         node_name = name_part;
-
+        _node_names.insert(node_name);
+        
         std::string adj_part;
         while (std::getline(line_stream, adj_part, ';'))
         {
@@ -32,11 +33,12 @@ QBF :: QBF(const std::string& file_name_) : _computed(false)
             if (std::getline(adj_stream, neighbor_name, ',') && (adj_stream >> cost))
             {
                 _graph[node_name].emplace_back(neighbor_name, cost);
+                _node_names.insert(neighbor_name);
             }
         }
     }
 
-    for (const auto& [node, adjacency_list] : _graph)
+    for (const auto& [node, adjacency_list] : _graph) // AHONNAN NEM MEGY EL AZ NINCS BENNE!!
     {
         _node_names.insert(node);
     }
@@ -61,7 +63,7 @@ void QBF :: compute_shortest_paths(const std::string& source_)
 {
     if(_node_names.find(source_) == _node_names.end()) 
     { 
-        std::cerr<< "Invalid source node"; 
+        std::cerr<< "\n>>Invalid source node<<\n"; 
         return;
     }
 
@@ -125,7 +127,7 @@ void QBF :: get_shortest_path(const std::string& dest_)
 
     if(!_computed) { std::cerr << "\n>>A source node was not yet given<<\n"; return;  }
 
-    if(_parents[dest_] == NO_PARENT) 
+    if(_distances[dest_] == INFINITY) 
     { 
         std::cerr << "\n>>The given node is unreachable from the source node<<\n"; return; 
     }
@@ -143,7 +145,7 @@ void QBF :: get_shortest_path(const std::string& dest_)
 
 void QBF :: print_shortest_path()
 {
-    if(!_computed) { return;  }
+    if(!_computed || _shortest_path.size() == 0) { return;  }
 
     std::cout << "\nThe shortest path from " << *_shortest_path.begin() << " to " << _shortest_path.back() << ":\n\n";
 

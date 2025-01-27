@@ -1,4 +1,6 @@
-a:b,3;c,1;
-b:d,-2;
-c:b,-1;
-d:c,3;
+Budapest:Totvazsony,5;Becs,-2;Szeged,2;Szolnok,0;
+Totvazsony:Pozsony,10;Barnag,-1;
+Pozsony:Becs,3;
+Becs:Totvazsony,1;
+Szeged:Becs,7;
+Szolnok:Barnag,-3;
